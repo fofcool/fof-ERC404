@@ -9,8 +9,11 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 import "hardhat/console.sol";
 
 contract Fof is ERC404, ERC404MerkleClaim, Ownable, ReentrancyGuard {
+    using Strings for uint256;
 
     uint256 public constant MAX_FOF_ERC721 = 200_000;
+    string private _baseUri = '';
+    string private _baseExtension = ".json";
 
     bool private _publicMint = false;
 
@@ -33,8 +36,21 @@ contract Fof is ERC404, ERC404MerkleClaim, Ownable, ReentrancyGuard {
         _maxSizeAtOneTime = 10 * units;
     } 
 
-    function tokenURI(uint256 id) public pure override returns (string memory) {
-        return string.concat("https://example.com/token/", Strings.toString(id));
+    function tokenURI(uint256 id) public view override returns (string memory) {
+        string memory baseURI = _baseURI();
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, id.toString(), _baseExtension)) : "";
+    }
+
+    function _baseURI() internal view returns (string memory) {
+        return _baseUri;
+    }
+
+    function BASE_URI() external view returns (string memory) {
+        return _baseUri;
+    }
+
+    function setBaseURI(string memory baseUri) public onlyOwner {
+        _baseUri = baseUri;
     }
 
     function setERC721TransferExempt(address account, bool value) external onlyOwner {
