@@ -80,6 +80,42 @@
         "IERC404"
       ]
     },
+    "/Users/lijinxing/Documents/fof-ERC404/contracts/ERC404/contracts/lib/ERC721Receiver.sol": {
+      "lastModificationDate": 1707769424247,
+      "contentHash": "bf6345e22273ec1d2350fcca5b674a6b",
+      "sourceName": "contracts/ERC404/contracts/lib/ERC721Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Receiver"
+      ]
+    },
     "/Users/lijinxing/Documents/fof-ERC404/contracts/ERC404/contracts/lib/DoubleEndedQueue.sol": {
       "lastModificationDate": 1707769391256,
       "contentHash": "4d5561059addb36f6df27a8fa4d4269c",
@@ -152,45 +188,9 @@
         "IERC165"
       ]
     },
-    "/Users/lijinxing/Documents/fof-ERC404/contracts/ERC404/contracts/lib/ERC721Receiver.sol": {
-      "lastModificationDate": 1707769424247,
-      "contentHash": "bf6345e22273ec1d2350fcca5b674a6b",
-      "sourceName": "contracts/ERC404/contracts/lib/ERC721Receiver.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC721Receiver"
-      ]
-    },
     "/Users/lijinxing/Documents/fof-ERC404/contracts/Fof.sol": {
-      "lastModificationDate": 1707934060789,
-      "contentHash": "fd87c0b5abaa5d8061587f25faf2bf1e",
+      "lastModificationDate": 1707995727959,
+      "contentHash": "59997aa2ff6840f20ec1fe1861defbee",
       "sourceName": "contracts/Fof.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -270,6 +270,42 @@
         "ERC404MerkleClaim"
       ]
     },
+    "/Users/lijinxing/Documents/fof-ERC404/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1707476360345,
+      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
     "/Users/lijinxing/Documents/fof-ERC404/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
       "lastModificationDate": 1707476608848,
       "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
@@ -308,10 +344,10 @@
         "Ownable"
       ]
     },
-    "/Users/lijinxing/Documents/fof-ERC404/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1707476360345,
-      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
-      "sourceName": "hardhat/console.sol",
+    "/Users/lijinxing/Documents/fof-ERC404/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+      "lastModificationDate": 1707476608849,
+      "contentHash": "a92331adac11b453a4de0323fc948119",
+      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -338,10 +374,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.4.22 <0.9.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "console"
+        "ReentrancyGuard"
       ]
     },
     "/Users/lijinxing/Documents/fof-ERC404/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
@@ -381,42 +417,6 @@
       ],
       "artifacts": [
         "Strings"
-      ]
-    },
-    "/Users/lijinxing/Documents/fof-ERC404/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
-      "lastModificationDate": 1707476608849,
-      "contentHash": "a92331adac11b453a4de0323fc948119",
-      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ReentrancyGuard"
       ]
     },
     "/Users/lijinxing/Documents/fof-ERC404/contracts/ERC404/contracts/extensions/IERC404MerkleClaim.sol": {

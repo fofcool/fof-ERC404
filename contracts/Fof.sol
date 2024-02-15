@@ -37,6 +37,9 @@ contract Fof is ERC404, ERC404MerkleClaim, Ownable, ReentrancyGuard {
     } 
 
     function tokenURI(uint256 id) public view override returns (string memory) {
+        if (id > _minted || id == 0 || _getOwnerOf(id) == address(0)) {
+        revert NotFound();
+        }
         string memory baseURI = _baseURI();
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, id.toString(), _baseExtension)) : "";
     }

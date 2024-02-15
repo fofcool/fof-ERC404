@@ -99,22 +99,22 @@ describe("Fof", () => {
             await fof.contract.connect(fof.signers[0]).startPublicMint(true);
             const mintPrice = await fof.contract.getPublicMintPrice();
             await expect(fof.contract.connect(fof.signers[1]).publicMint(11, {value: mintPrice * 11n}))
-                .to.be.revertedWithCustomError(fof.contract, "ExceedsMaxSizeAtOneTime")
-                .withArgs(11, 10);
+                    .to.be.revertedWithCustomError(fof.contract, "ExceedsMaxSizeAtOneTime")
+                    .withArgs(11, 10);
         });
 
         it("should revert if public mint not active", async () => {
             const fof = await loadFixture(deployFof);
             const mintPrice = await fof.contract.getPublicMintPrice();
             await expect(fof.contract.connect(fof.signers[2]).publicMint(1, {value: mintPrice * 1n}))
-                .to.be.revertedWithCustomError(fof.contract, "PublicMintNotActive");
+                    .to.be.revertedWithCustomError(fof.contract, "PublicMintNotActive");
             await fof.contract.connect(fof.signers[0]).startPublicMint(true);
             await expect(fof.contract.connect(fof.signers[2]).publicMint(1, {value: mintPrice * 1n}))
-                .to.be.not.reverted;
+                    .to.be.not.reverted;
             expect(await fof.contract.balanceOf(fof.signers[2])).to.equal(1n * 10n ** 18n);
             await fof.contract.connect(fof.signers[0]).startPublicMint(false);
             await expect(fof.contract.connect(fof.signers[2]).publicMint(1, {value: mintPrice * 1n}))
-                .to.be.revertedWithCustomError(fof.contract, "PublicMintNotActive");
+                    .to.be.revertedWithCustomError(fof.contract, "PublicMintNotActive");
             expect(await fof.contract.balanceOf(fof.signers[2])).to.equal(1n * 10n ** 18n);
         });
 
@@ -123,8 +123,8 @@ describe("Fof", () => {
             const mintPrice = await fof.contract.getPublicMintPrice();
             await fof.contract.connect(fof.signers[0]).startPublicMint(true);
             await expect(fof.contract.connect(fof.signers[2]).publicMint(2, {value: mintPrice * 1n}))
-                .to.be.revertedWithCustomError(fof.contract, "InsufficientEther")
-                .withArgs(mintPrice * 2n, mintPrice * 1n);
+                    .to.be.revertedWithCustomError(fof.contract, "InsufficientEther")
+                    .withArgs(mintPrice * 2n, mintPrice * 1n);
             expect(await fof.contract.balanceOf(fof.signers[2])).to.equal(0);
         });
 
@@ -133,9 +133,8 @@ describe("Fof", () => {
             await fof.contract.connect(fof.signers[0]).startPublicMint(true);
             const mintPrice = await fof.contract.getPublicMintPrice();
             expect(mintPrice).to.be.equal(ethers.parseEther('0.25'))
-            await expect(
-                fof.contract.connect(fof.signers[2]).publicMint(5, {value: mintPrice * 5n}))
-                .not.to.be.reverted;
+            await expect(fof.contract.connect(fof.signers[2]).publicMint(5, {value: mintPrice * 5n}))
+                    .not.to.be.reverted;
             const balance = await fof.contract.balanceOf(fof.signers[2]);
             expect(balance).to.equal(5n * 10n ** 18n);
         });
@@ -172,4 +171,35 @@ describe("Fof", () => {
         })
     })
 
+    describe("uri", () => {
+        it("should restrict URI setting privileges exclusively to the contract owner", async () => {
+            const fof = await loadFixture(deployFof);
+            await expect(fof.contract.connect(fof.signers[2]).setBaseURI("https://www.example.com/"))
+                    .to.be.revertedWithCustomError(fof.contract, "OwnableUnauthorizedAccount")
+                    .withArgs(fof.signers[2].address);
+            expect(await fof.contract.BASE_URI()).to.be.equal("");
+            await fof.contract.connect(fof.signers[0]).setBaseURI("https://www.example.com/");
+            expect(await fof.contract.BASE_URI()).to.be.equal("https://www.example.com/");
+        })
+
+        it("should accurately retrieve the URI", async () => {
+            const fof = await loadFixture(deployFof);
+            await fof.contract.connect(fof.signers[0]).setBaseURI("https://www.example.com/");
+            await fof.contract.connect(fof.signers[1]).transfer(fof.signers[2].address, 2n * fof.deployConfig.units);
+            expect(await fof.contract.tokenURI(1)).to.be.equal("https://www.example.com/1.json");
+        })
+
+        it("should revert when queried with an invalid ID", async () => {
+            const fof = await loadFixture(deployFof);
+            await fof.contract.connect(fof.signers[0]).setBaseURI("https://www.example.com/");
+            await expect(fof.contract.tokenURI(1)).to.be.revertedWithCustomError(fof.contract, "NotFound");
+            await expect(fof.contract.tokenURI(2)).to.be.revertedWithCustomError(fof.contract, "NotFound");
+            await fof.contract.connect(fof.signers[1]).transfer(fof.signers[2].address, 2n * fof.deployConfig.units);
+            expect(await fof.contract.tokenURI(2)).to.be.equal("https://www.example.com/2.json");
+            await expect(fof.contract.tokenURI(3)).to.be.revertedWithCustomError(fof.contract, "NotFound");
+            await fof.contract.connect(fof.signers[2]).transfer(fof.signers[1].address, 1n * fof.deployConfig.units);
+            expect(await fof.contract.erc721TotalSupply()).to.be.equal(2);
+            await expect(fof.contract.tokenURI(2)).to.be.revertedWithCustomError(fof.contract, "NotFound");
+        })
+    })
 })
